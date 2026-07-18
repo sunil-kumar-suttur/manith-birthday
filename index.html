@@ -69,113 +69,59 @@
         overflow: hidden;
       }
 
-      /* ============ TEDDY DOOR INTRO ============ */
+      /* ============ TEDDY INTRO ============ */
       .teddy-door {
         position: fixed;
         inset: 0;
         z-index: 9999;
-      }
-      .door-panel {
-        position: fixed;
-        top: 0;
-        height: 100vh;
-        width: 50vw;
-        overflow: hidden;
-        background: linear-gradient(160deg, var(--sky-mid), var(--cream));
-        transform-style: preserve-3d;
-        transition:
-          transform 1.15s cubic-bezier(0.6, -0.1, 0.25, 1),
-          opacity 1.15s ease;
-      }
-      .door-left {
-        left: 0;
-        transform-origin: left center;
-      }
-      .door-right {
-        right: 0;
-        transform-origin: right center;
-      }
-      .door-panel .bear-big {
-        position: absolute;
-        top: 0;
-        width: 100vw;
-        height: 100%;
-      }
-      .door-left .bear-big {
-        left: 0;
-      }
-      .door-right .bear-big {
-        right: 0;
-      }
-      .door-panel .bear-big svg {
-        width: 72%;
-        height: 37%;
         display: flex;
-        position: absolute;
-        top: 27%;
-        left: 14%;
+        align-items: flex-start;
+        justify-content: center;
+        background: linear-gradient(180deg, var(--sky-mid), var(--cream));
+        overflow: hidden;
       }
-      .door-seam {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        width: 2px;
-        height: 100vh;
-        background: rgba(12, 39, 72, 0.15);
-        transform: translateX(-1px);
-        z-index: 10000;
-        transition: opacity 0.5s ease;
+
+      .bear-big {
+        width: 260px;
+        margin-top: -350px;
+        animation: teddyJump 2.2s ease-in-out forwards;
       }
-      .door-hint {
-        position: fixed;
-        left: 50%;
-        bottom: 9%;
-        transform: translate(-50%, 0);
-        z-index: 10001;
-        background: var(--red);
-        color: #fff;
-        border: none;
-        padding: 14px 30px;
-        border-radius: 999px;
-        font-weight: 700;
-        font-size: 15px;
-        letter-spacing: 0.3px;
-        box-shadow: 0 10px 26px rgba(224, 71, 61, 0.45);
-        animation: hintPulse 1.6s ease-in-out infinite;
-        transition:
-          opacity 0.4s ease,
-          transform 0.4s ease;
+
+      .bear-big svg {
+        width: 100%;
+        height: auto;
       }
-      @keyframes hintPulse {
-        0%,
-        100% {
-          transform: translate(-50%, 0) scale(1);
+
+      @keyframes teddyJump {
+        0% {
+          transform: translateY(0) scale(0.7);
         }
+
+        35% {
+          transform: translateY(55vh) scale(1.1);
+        }
+
         50% {
-          transform: translate(-50%, 0) scale(1.06);
+          transform: translateY(40vh) scale(0.95);
+        }
+
+        65% {
+          transform: translateY(60vh) scale(1.05);
+        }
+
+        80% {
+          transform: translateY(50vh);
+        }
+
+        100% {
+          transform: translateY(120vh);
         }
       }
-      .teddy-door.opening .door-left {
-        transform: translateX(-104%) rotateY(-38deg);
-      }
-      .teddy-door.opening .door-right {
-        transform: translateX(104%) rotateY(38deg);
-      }
-      .teddy-door.opening .door-hint {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-      }
-      .teddy-door.opening .door-seam {
-        opacity: 0;
-      }
+
       .teddy-door.hidden {
+        opacity: 0;
         visibility: hidden;
-        pointer-events: none;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .door-panel {
-          transition: none;
-        }
+        transition: opacity 0.5s;
       }
 
       /* ============ NAV ============ */
@@ -1155,6 +1101,9 @@
     </style>
   </head>
   <body>
+    <audio id="birthdayMusic" preload="auto">
+      <source src="birthday.mp3" type="audio/mpeg" />
+    </audio>
     <!-- Hidden SVG symbol library -->
     <svg class="sr-defs" aria-hidden="true">
       <defs>
@@ -1369,24 +1318,13 @@
 
     <!-- ============ TEDDY DOOR INTRO ============ -->
     <div class="teddy-door" id="teddyDoor">
-      <div class="door-panel door-left">
-        <div class="bear-big">
-          <svg viewBox="0 0 320 360" preserveAspectRatio="xMidYMid slice">
-            <use href="#s-bear" />
-          </svg>
-        </div>
+      <div class="bear-big" id="bear">
+        <svg viewBox="0 0 320 360">
+          <use href="#s-bear"></use>
+        </svg>
       </div>
-      <div class="door-panel door-right">
-        <div class="bear-big">
-          <svg viewBox="0 0 320 360" preserveAspectRatio="xMidYMid slice">
-            <use href="#s-bear" />
-          </svg>
-        </div>
-      </div>
-      <div class="door-seam"></div>
-      <button class="door-hint" id="doorHint">
-        🐾 Tap the teddy to begin!
-      </button>
+
+      <button id="openBtn">🐾 Tap Teddy To Open</button>
     </div>
 
     <!-- ============ NAV ============ -->
@@ -1712,20 +1650,11 @@
 
     <script>
       /* ---------- Teddy door intro ---------- */
-      var doorEl = document.getElementById("teddyDoor");
-      var doorHint = document.getElementById("doorHint");
-      var doorOpened = false;
-      function openDoor() {
-        if (doorOpened) return;
-        doorOpened = true;
-        doorEl.classList.add("opening");
-        setTimeout(function () {
-          doorEl.classList.add("hidden");
-        }, 1250);
-      }
-      doorHint.addEventListener("click", openDoor);
-      doorEl.addEventListener("click", openDoor);
-      setTimeout(openDoor, 2600);
+      const teddy = document.getElementById("teddyDoor");
+
+      setTimeout(() => {
+        teddy.classList.add("hidden");
+      }, 2200);
 
       /* ---------- Nav scroll + active state ---------- */
       function goTo(id) {
