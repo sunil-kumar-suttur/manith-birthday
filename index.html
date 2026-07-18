@@ -1,0 +1,1819 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manith Kashyap · Birthday Celebrations!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --sky-top: #7fc7f0;
+        --sky-mid: #b9e3f8;
+        --sky-bottom: #eef9ff;
+        --cream: #fffaf0;
+        --card: #ffffff;
+        --navy: #163f74;
+        --navy-deep: #0c2748;
+        --yellow: #ffcf3f;
+        --yellow-deep: #e9a400;
+        --green: #5da83c;
+        --green-deep: #3d7a26;
+        --red: #e0473d;
+        --red-deep: #af2e26;
+        --blue: #2f6fb5;
+        --blue-deep: #1d4c85;
+        --fur: #c99a63;
+        --fur-dark: #a1743f;
+        --belly: #f4e0ba;
+        --road: #4b4b55;
+        --grass: #78b25a;
+        --grass-deep: #5c9642;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Quicksand", sans-serif;
+        background: var(--cream);
+        color: var(--navy-deep);
+        overflow-x: hidden;
+        perspective: 1600px;
+      }
+      h1,
+      h2,
+      h3,
+      .display {
+        font-family: "Baloo 2", sans-serif;
+      }
+      img,
+      svg {
+        display: block;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+      .sr-defs {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      /* ============ TEDDY DOOR INTRO ============ */
+      .teddy-door {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+      }
+      .door-panel {
+        position: fixed;
+        top: 0;
+        height: 100vh;
+        width: 50vw;
+        overflow: hidden;
+        background: linear-gradient(160deg, var(--sky-mid), var(--cream));
+        transform-style: preserve-3d;
+        transition:
+          transform 1.15s cubic-bezier(0.6, -0.1, 0.25, 1),
+          opacity 1.15s ease;
+      }
+      .door-left {
+        left: 0;
+        transform-origin: left center;
+      }
+      .door-right {
+        right: 0;
+        transform-origin: right center;
+      }
+      .door-panel .bear-big {
+        position: absolute;
+        top: 0;
+        width: 100vw;
+        height: 100%;
+      }
+      .door-left .bear-big {
+        left: 0;
+      }
+      .door-right .bear-big {
+        right: 0;
+      }
+      .door-panel .bear-big svg {
+        width: 72%;
+        height: 37%;
+        display: flex;
+        position: absolute;
+        top: 27%;
+        left: 14%;
+      }
+      .door-seam {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100vh;
+        background: rgba(12, 39, 72, 0.15);
+        transform: translateX(-1px);
+        z-index: 10000;
+        transition: opacity 0.5s ease;
+      }
+      .door-hint {
+        position: fixed;
+        left: 50%;
+        bottom: 9%;
+        transform: translate(-50%, 0);
+        z-index: 10001;
+        background: var(--red);
+        color: #fff;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 10px 26px rgba(224, 71, 61, 0.45);
+        animation: hintPulse 1.6s ease-in-out infinite;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+      @keyframes hintPulse {
+        0%,
+        100% {
+          transform: translate(-50%, 0) scale(1);
+        }
+        50% {
+          transform: translate(-50%, 0) scale(1.06);
+        }
+      }
+      .teddy-door.opening .door-left {
+        transform: translateX(-104%) rotateY(-38deg);
+      }
+      .teddy-door.opening .door-right {
+        transform: translateX(104%) rotateY(38deg);
+      }
+      .teddy-door.opening .door-hint {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      .teddy-door.opening .door-seam {
+        opacity: 0;
+      }
+      .teddy-door.hidden {
+        visibility: hidden;
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .door-panel {
+          transition: none;
+        }
+      }
+
+      /* ============ NAV ============ */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        display: flex;
+        justify-content: center;
+        gap: clamp(6px, 2.5vw, 20px);
+        padding: 14px 4vw;
+        background: rgba(255, 250, 240, 0.88);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 18px rgba(22, 63, 116, 0.08);
+      }
+      nav button {
+        background: none;
+        border: none;
+        color: var(--navy);
+        font-family: "Baloo 2", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.3px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+      nav button:hover,
+      nav button.active {
+        color: #fff;
+        background: var(--blue);
+      }
+
+      /* ============ HERO ============ */
+      .hero {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+        padding: 120px 6vw 80px;
+        background: linear-gradient(
+          180deg,
+          var(--sky-top) 0%,
+          var(--sky-mid) 55%,
+          var(--sky-bottom) 100%
+        );
+      }
+      .sun {
+        position: absolute;
+        top: 6%;
+        right: 9%;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 40% 35%,
+          #fff6d8,
+          var(--yellow) 65%
+        );
+        opacity: 0.9;
+        box-shadow: 0 0 60px 18px rgba(255, 207, 63, 0.5);
+        animation: sunPulse 6s ease-in-out infinite;
+      }
+      @keyframes sunPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.06);
+        }
+      }
+
+      .cloud {
+        position: absolute;
+        opacity: 0.95;
+      }
+      .cloud svg {
+        width: 100%;
+        height: 100%;
+      }
+      .cloud.c1 {
+        top: 10%;
+        left: -10%;
+        width: 180px;
+        height: 90px;
+        animation: driftCloud 46s linear infinite;
+      }
+      .cloud.c2 {
+        top: 22%;
+        left: -30%;
+        width: 130px;
+        height: 65px;
+        animation: driftCloud 60s linear infinite;
+        animation-delay: -15s;
+      }
+      .cloud.c3 {
+        top: 6%;
+        left: -50%;
+        width: 100px;
+        height: 52px;
+        animation: driftCloud 38s linear infinite;
+        animation-delay: -8s;
+      }
+      @keyframes driftCloud {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(140vw);
+        }
+      }
+
+      .bunting {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 3vw;
+        z-index: 3;
+      }
+      .flag {
+        width: 6.4%;
+        aspect-ratio: 2/2.6;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top center;
+        animation: flagSway 2.6s ease-in-out infinite;
+      }
+      .flag:nth-child(odd) {
+        background: var(--blue);
+      }
+      .flag:nth-child(3n) {
+        background: var(--yellow);
+      }
+      .flag:nth-child(4n) {
+        background: var(--green);
+      }
+      .flag:nth-child(5n) {
+        background: var(--red);
+      }
+      .flag:nth-child(2n) {
+        animation-delay: -1.3s;
+      }
+      @keyframes flagSway {
+        0%,
+        100% {
+          transform: rotate(-4deg);
+        }
+        50% {
+          transform: rotate(4deg);
+        }
+      }
+
+      .balloon-float {
+        position: absolute;
+        z-index: 2;
+        animation: balloonBob 5.5s ease-in-out infinite;
+      }
+      .balloon-float.left {
+        top: 76%;
+        left: 5%;
+        width: 130px;
+      }
+      .balloon-float.right {
+        top: 40%;
+        right: 4%;
+        width: 95px;
+        animation-delay: -2.4s;
+      }
+      .balloon-float svg {
+        width: 100%;
+        height: auto;
+      }
+      @keyframes balloonBob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-2deg);
+        }
+        50% {
+          transform: translateY(-22px) rotate(2deg);
+        }
+      }
+
+      .plane-fly {
+        position: absolute;
+        top: 16%;
+        right: -260px;
+        width: 170px;
+        z-index: 4;
+        animation: planeLeft 12s linear infinite;
+        animation-delay: 1.2s;
+      }
+      .plane-fly svg {
+        width: 100%;
+        height: auto;
+      }
+      .plane-fly .prop {
+        transform-origin: center;
+        animation: propSpin 0.12s linear infinite;
+      }
+      .plane-banner {
+        font-family: "Baloo 2", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        fill: var(--navy-deep);
+      }
+      @keyframes planeLeft {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(calc(-100vw - 300px));
+        }
+      }
+      @keyframes propSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .star {
+        position: absolute;
+        animation: twinkle 2.4s ease-in-out infinite;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+
+      .hero-invite {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--navy);
+        text-transform: uppercase;
+        z-index: 5;
+        opacity: 0;
+        animation: fadeUp 1s ease forwards;
+        animation-delay: 0.1s;
+      }
+      .hero h1 {
+        font-size: clamp(48px, 10vw, 104px);
+        font-weight: 800;
+        line-height: 1;
+        color: var(--navy-deep);
+        margin: 10px 0 6px;
+        z-index: 5;
+        text-shadow: 0 6px 0 rgba(255, 255, 255, 0.5);
+        animation:
+          fadeUp 1.1s ease forwards 0.25s,
+          textBreathe 4.2s ease-in-out infinite 1.6s;
+        opacity: 0;
+      }
+      @keyframes textBreathe {
+        0%,
+        55%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        27% {
+          transform: translateY(-5px) scale(1.015);
+        }
+      }
+      .age-badge {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 10px;
+        font-family: "Baloo 2", sans-serif;
+        font-weight: 700;
+        font-size: clamp(18px, 3vw, 24px);
+        color: var(--navy);
+        z-index: 5;
+        opacity: 0;
+        animation: fadeUp 1.1s ease forwards 0.35s;
+      }
+      .age-badge .age-num {
+        font-size: clamp(50px, 9vw, 88px);
+        color: var(--yellow-deep);
+        -webkit-text-stroke: 3px var(--navy-deep);
+        line-height: 1;
+        animation: agePop 1.8s ease-in-out infinite 1.4s;
+      }
+      @keyframes agePop {
+        0%,
+        100% {
+          transform: scale(1) rotate(-3deg);
+        }
+        50% {
+          transform: scale(1.09) rotate(3deg);
+        }
+      }
+      .confetti-piece {
+        position: absolute;
+        width: 9px;
+        height: 13px;
+        opacity: 0;
+        z-index: 3;
+        animation: confettiFall linear infinite;
+      }
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(-30px) rotate(0deg);
+          opacity: 0;
+        }
+        8% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(78vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      .ribbon {
+        position: relative;
+        display: inline-block;
+        margin: 18px auto 30px;
+        background: var(--blue);
+        color: #fff;
+        font-family: "Baloo 2", sans-serif;
+        font-weight: 700;
+        font-size: clamp(18px, 3vw, 26px);
+        padding: 14px 44px;
+        border-radius: 6px;
+        z-index: 5;
+        opacity: 0;
+        animation:
+          fadeUp 1.1s ease forwards 0.45s,
+          ribbonWiggle 3.2s ease-in-out infinite 1.7s;
+        box-shadow: 0 10px 24px rgba(47, 111, 181, 0.35);
+      }
+      @keyframes ribbonWiggle {
+        0%,
+        100% {
+          transform: rotate(-1.6deg);
+        }
+        50% {
+          transform: rotate(1.6deg);
+        }
+      }
+      .ribbon::before,
+      .ribbon::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        border-style: solid;
+        width: 0;
+        height: 0;
+      }
+      .ribbon::before {
+        left: -24px;
+        border-width: 24px 22px 24px 0;
+        border-color: transparent var(--blue-deep) transparent transparent;
+      }
+      .ribbon::after {
+        right: -24px;
+        border-width: 24px 0 24px 22px;
+        border-color: transparent transparent transparent var(--blue-deep);
+      }
+
+      .hero .navhint {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        z-index: 5;
+        opacity: 0;
+        animation: fadeUp 1.2s ease forwards;
+        animation-delay: 0.55s;
+      }
+      .hero .navhint button {
+        background: #fff;
+        border: 2px solid var(--navy);
+        color: var(--navy);
+        padding: 11px 22px;
+        border-radius: 999px;
+        font-family: "Baloo 2", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease,
+          transform 0.2s ease;
+      }
+      .hero .navhint button:hover {
+        background: var(--navy);
+        color: #fff;
+        transform: translateY(-3px);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 50px 20px 10px;
+      }
+      .divider span {
+        width: 50px;
+        height: 3px;
+        border-radius: 99px;
+        background: var(--green);
+        opacity: 0.5;
+      }
+
+      section {
+        padding: 70px 6vw 70px;
+        max-width: 1040px;
+        margin: 0 auto;
+        scroll-margin-top: 70px;
+      }
+      .label {
+        text-align: center;
+        letter-spacing: 1.5px;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 8px;
+      }
+      .heading {
+        text-align: center;
+        font-size: clamp(30px, 5vw, 44px);
+        font-weight: 700;
+        color: var(--navy-deep);
+        margin-bottom: 34px;
+      }
+
+      /* ============ COUNTDOWN ============ */
+      .countdown {
+        display: flex;
+        justify-content: center;
+        gap: clamp(12px, 4vw, 26px);
+        flex-wrap: wrap;
+      }
+      .cbox {
+        border: 4px solid var(--blue);
+        border-radius: 24px;
+        padding: 20px 22px 18px;
+        text-align: center;
+        min-width: 100px;
+        opacity: 0;
+        transform: scale(0.7) translateY(14px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        animation: cboxGlow 3.2s ease-in-out infinite;
+      }
+      .cbox.in-view {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+      .cbox:nth-child(1) {
+        transition-delay: 0.05s;
+        animation-delay: 0s;
+        background: #eaf4ff;
+        border-color: var(--blue);
+      }
+      .cbox:nth-child(2) {
+        transition-delay: 0.2s;
+        animation-delay: 0.4s;
+        background: #eefaea;
+        border-color: var(--green);
+      }
+      .cbox:nth-child(3) {
+        transition-delay: 0.35s;
+        animation-delay: 0.8s;
+        background: #fff8e0;
+        border-color: var(--yellow-deep);
+      }
+      .cbox:nth-child(4) {
+        transition-delay: 0.5s;
+        animation-delay: 1.2s;
+        background: #fdeceb;
+        border-color: var(--red);
+      }
+      @keyframes cboxGlow {
+        0%,
+        100% {
+          box-shadow: 0 10px 22px rgba(47, 111, 181, 0.14);
+        }
+        50% {
+          box-shadow: 0 12px 30px rgba(255, 207, 63, 0.5);
+        }
+      }
+      .cbox .icon {
+        display: block;
+        font-size: 26px;
+        margin-bottom: 2px;
+        animation: iconBob 2.4s ease-in-out infinite;
+      }
+      .cbox:nth-child(2) .icon {
+        animation-delay: -0.6s;
+      }
+      .cbox:nth-child(3) .icon {
+        animation-delay: -1.2s;
+      }
+      .cbox:nth-child(4) .icon {
+        animation-delay: -1.8s;
+      }
+      @keyframes iconBob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-6deg);
+        }
+        50% {
+          transform: translateY(-6px) rotate(6deg);
+        }
+      }
+      .cbox .num {
+        font-family: "Baloo 2", sans-serif;
+        font-size: 40px;
+        font-weight: 700;
+        color: var(--navy-deep);
+        line-height: 1;
+        display: inline-block;
+        animation: numJelly 2.6s ease-in-out infinite;
+      }
+      @keyframes numJelly {
+        0%,
+        100% {
+          transform: scaleY(1) scaleX(1);
+        }
+        45% {
+          transform: scaleY(1.09) scaleX(0.94);
+        }
+        55% {
+          transform: scaleY(0.95) scaleX(1.05);
+        }
+      }
+      .cbox .unit {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-top: 6px;
+        display: block;
+      }
+      .cbox:nth-child(1) .unit {
+        color: var(--blue);
+      }
+      .cbox:nth-child(2) .unit {
+        color: var(--green);
+      }
+      .cbox:nth-child(3) .unit {
+        color: var(--yellow-deep);
+      }
+      .cbox:nth-child(4) .unit {
+        color: var(--red);
+      }
+
+      /* ============ SIGNPOST DETAILS ============ */
+      .signpost-wrap {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+      }
+      .signpost {
+        position: relative;
+        width: min(680px, 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 26px;
+        padding-left: 70px;
+      }
+      .post-pole {
+        position: absolute;
+        left: 20px;
+        top: -10px;
+        bottom: -30px;
+        width: 22px;
+        background: repeating-linear-gradient(
+          180deg,
+          var(--fur-dark),
+          var(--fur-dark) 10px,
+          var(--fur) 10px,
+          var(--fur) 20px
+        );
+        border-radius: 6px;
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.15) inset;
+      }
+      .sign {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: #fff;
+        padding: 16px 24px 16px 30px;
+        border-radius: 8px 26px 26px 8px;
+        min-height: 64px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+        cursor: default;
+        opacity: 0;
+        transform: translateX(-60px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .sign::after {
+        content: "";
+        position: absolute;
+        right: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 32px 0 32px 20px;
+      }
+      .sign.in-view {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .sign:hover {
+        transform: translateX(6px) !important;
+      }
+      .sign.date {
+        background: var(--blue);
+      }
+      .sign.date::after {
+        border-color: transparent transparent transparent var(--blue);
+      }
+      .sign.venue {
+        background: var(--green);
+        cursor: pointer;
+      }
+      .sign.venue::after {
+        border-color: transparent transparent transparent var(--green);
+      }
+      .sign .maps-link {
+        display: inline-block;
+        margin-top: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: underline;
+        opacity: 0.95;
+      }
+      .sign.time {
+        background: var(--red);
+      }
+      .sign.time::after {
+        border-color: transparent transparent transparent var(--red);
+      }
+      .sign .sicon {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        background: rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+      .sign .stext h3 {
+        font-family: "Baloo 2", sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        margin-bottom: 3px;
+      }
+      .sign .stext p {
+        font-size: 14px;
+        font-weight: 600;
+        opacity: 0.95;
+        line-height: 1.5;
+      }
+
+      /* ============ PARADE / CELEBRATION SECTION ============ */
+      .parade-section {
+        max-width: 100%;
+        padding: 70px 0 0;
+      }
+      .parade-stage {
+        position: relative;
+        height: clamp(340px, 48vw, 480px);
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          var(--sky-mid) 0%,
+          var(--sky-bottom) 40%,
+          #dff0d8 40%,
+          var(--grass) 78%,
+          var(--grass-deep) 100%
+        );
+      }
+      .parade-stage .cloud {
+        opacity: 0.9;
+      }
+      .trees {
+        position: absolute;
+        bottom: 20%;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2%;
+        z-index: 1;
+      }
+      .tree {
+        width: 6%;
+        min-width: 52px;
+        animation: treeSway 3.4s ease-in-out infinite;
+      }
+      .tree:nth-child(even) {
+        animation-delay: -1.7s;
+      }
+      .tree svg {
+        width: 100%;
+        height: auto;
+      }
+      @keyframes treeSway {
+        0%,
+        100% {
+          transform: rotate(-2deg);
+        }
+        50% {
+          transform: rotate(2deg);
+        }
+      }
+
+      .road {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 22%;
+        background: var(--road);
+        z-index: 2;
+      }
+      .road::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 6px;
+        transform: translateY(-50%);
+        background: repeating-linear-gradient(
+          90deg,
+          #f4d35e 0 40px,
+          transparent 40px 80px
+        );
+        animation: roadMove 1.4s linear infinite;
+      }
+      @keyframes roadMove {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: 160px 0;
+        }
+      }
+
+      .plane-parade {
+        position: absolute;
+        top: 6%;
+        right: -240px;
+        width: 150px;
+        z-index: 5;
+        opacity: 0;
+        animation: none;
+      }
+      .parade-stage.in-view .plane-parade {
+        animation: planeLeft 11s linear infinite;
+        animation-delay: 0.6s;
+        opacity: 1;
+      }
+      .plane-parade svg {
+        width: 100%;
+      }
+      .plane-parade .prop {
+        transform-origin: center;
+        animation: propSpin 0.12s linear infinite;
+      }
+
+      .actor {
+        position: absolute;
+        bottom: 22%;
+        z-index: 3;
+        opacity: 0;
+        transform: translateX(140%);
+        transition:
+          opacity 0.9s ease,
+          transform 1.1s cubic-bezier(0.34, 1.4, 0.64, 1);
+      }
+      .parade-stage.in-view .actor {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .actor .wheel {
+        transform-origin: center;
+        animation: wheelSpin 1.1s linear infinite;
+      }
+      .parade-stage.in-view .actor.excavator {
+        transition-delay: 0.15s;
+      }
+      .parade-stage.in-view .actor.truck {
+        transition-delay: 0.4s;
+      }
+      .parade-stage.in-view .actor.car {
+        transition-delay: 0.65s;
+      }
+      @keyframes wheelSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .actor.car {
+        left: 8%;
+        width: 14%;
+        min-width: 80px;
+      }
+      .actor.truck {
+        left: 35%;
+        width: 17%;
+        min-width: 60px;
+      }
+      .actor.excavator {
+        left: 66%;
+        width: 18%;
+        min-width: 80px;
+      }
+      .actor.excavator .arm {
+        transform-origin: 96px 78px;
+        animation: dig 3.6s ease-in-out infinite;
+      }
+      @keyframes dig {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        30% {
+          transform: rotate(-10deg);
+        }
+        60% {
+          transform: rotate(6deg);
+        }
+      }
+      @keyframes wave {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(-26deg);
+        }
+      }
+
+      .actor svg {
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.18));
+      }
+
+      .from-block {
+        text-align: center;
+        padding: 44px 20px 60px;
+        background: var(--grass-deep);
+      }
+      .from-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 26px;
+        flex-wrap: wrap;
+      }
+      .from-bear {
+        width: clamp(96px, 16vw, 150px);
+        animation: balloonBob 4.6s ease-in-out infinite;
+      }
+      .from-bear svg {
+        width: 100%;
+        filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.25));
+      }
+      .from-bear .arm-wave {
+        transform-origin: 78px 205px;
+        animation: wave 1.6s ease-in-out infinite;
+      }
+      .from-text {
+        text-align: left;
+      }
+      .from-block .from-label {
+        font-family: "Baloo 2", sans-serif;
+        font-weight: 700;
+        color: #fff;
+        font-size: 20px;
+        letter-spacing: 0.4px;
+      }
+      .from-block .from-names {
+        color: #eafbe4;
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: 6px;
+      }
+      .from-block .heart-div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .from-block .heart-div span {
+        width: 44px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      footer {
+        text-align: center;
+        padding: 40px 20px 56px;
+        color: #eaf2ff;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        background: var(--navy-deep);
+      }
+      footer .display {
+        font-size: 22px;
+        color: var(--yellow);
+        margin-bottom: 6px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 760px) {
+        .signpost {
+          padding-left: 56px;
+        }
+        .actor.car {
+          width: 24%;
+        }
+        .actor.truck {
+          width: 29%;
+        }
+        .actor.excavator {
+          width: 30%;
+        }
+        nav {
+          gap: 4px;
+          overflow-x: auto;
+          justify-content: flex-start;
+        }
+        .balloon-float.right {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hidden SVG symbol library -->
+    <svg class="sr-defs" aria-hidden="true">
+      <defs>
+        <symbol id="s-bear" viewBox="0 0 320 360">
+          <ellipse cx="110" cy="322" rx="50" ry="34" fill="#a1743f" />
+          <ellipse cx="210" cy="322" rx="50" ry="34" fill="#a1743f" />
+          <ellipse cx="110" cy="330" rx="26" ry="14" fill="#f4e0ba" />
+          <ellipse cx="210" cy="330" rx="26" ry="14" fill="#f4e0ba" />
+          <g class="arm-wave">
+            <ellipse cx="42" cy="228" rx="40" ry="58" fill="#c99a63" />
+          </g>
+          <ellipse cx="278" cy="228" rx="40" ry="58" fill="#c99a63" />
+          <ellipse cx="160" cy="240" rx="112" ry="98" fill="#c99a63" />
+          <ellipse cx="160" cy="256" rx="66" ry="58" fill="#f4e0ba" />
+          <path
+            d="M160 190 l-28 -15 v30 z M160 190 l28 -15 v30 z"
+            fill="#e0473d"
+          />
+          <circle cx="160" cy="190" r="7" fill="#af2e26" />
+          <circle cx="80" cy="55" r="40" fill="#c99a63" />
+          <circle cx="240" cy="55" r="40" fill="#c99a63" />
+          <circle cx="80" cy="55" r="19" fill="#f4e0ba" />
+          <circle cx="240" cy="55" r="19" fill="#f4e0ba" />
+          <circle cx="160" cy="120" r="97" fill="#c99a63" />
+          <ellipse cx="160" cy="146" rx="58" ry="42" fill="#f4e0ba" />
+          <circle cx="127" cy="106" r="9" fill="#0c2748" />
+          <circle cx="193" cy="106" r="9" fill="#0c2748" />
+          <circle cx="124" cy="103" r="2.4" fill="#fff" />
+          <circle cx="190" cy="103" r="2.4" fill="#fff" />
+          <ellipse cx="160" cy="132" rx="15" ry="11" fill="#0c2748" />
+          <path
+            d="M160 143 q0 12 -15 16"
+            stroke="#0c2748"
+            stroke-width="4"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M160 143 q0 12 15 16"
+            stroke="#0c2748"
+            stroke-width="4"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </symbol>
+
+        <symbol id="s-car" viewBox="0 0 200 110">
+          <ellipse cx="100" cy="92" rx="88" ry="9" fill="rgba(0,0,0,.15)" />
+          <path
+            d="M14 70 Q14 40 44 38 L70 38 Q86 14 118 14 L152 38 Q188 40 188 70 L188 74 L14 74 Z"
+            fill="#2f6fb5"
+          />
+          <path
+            d="M80 38 L102 20 L128 20 L142 38 Z"
+            fill="#cfe8ff"
+            stroke="#1d4c85"
+            stroke-width="3"
+          />
+          <rect x="14" y="70" width="174" height="10" rx="4" fill="#1d4c85" />
+          <circle class="wheel" cx="56" cy="82" r="17" fill="#0c2748" />
+          <circle cx="56" cy="82" r="6" fill="#e8eef5" />
+          <circle class="wheel" cx="148" cy="82" r="17" fill="#0c2748" />
+          <circle cx="148" cy="82" r="6" fill="#e8eef5" />
+          <circle cx="180" cy="58" r="5" fill="#ffcf3f" />
+        </symbol>
+
+        <symbol id="s-truck" viewBox="0 0 260 130">
+          <ellipse cx="130" cy="112" rx="118" ry="10" fill="rgba(0,0,0,.15)" />
+          <path
+            d="M12 96 L12 52 Q12 40 24 40 L70 40 Q84 16 106 16 L106 40 L118 40 L118 96 Z"
+            fill="#e0473d"
+          />
+          <path
+            d="M78 40 L96 22 L104 22 L104 40 Z"
+            fill="#cfe8ff"
+            stroke="#af2e26"
+            stroke-width="3"
+          />
+          <path d="M124 22 L244 22 L244 96 L124 96 Z" fill="#ffcf3f" />
+          <path d="M124 22 L244 22 L236 40 L124 40 Z" fill="#ffe28a" />
+          <rect x="12" y="92" width="234" height="10" rx="4" fill="#af2e26" />
+          <circle class="wheel" cx="58" cy="104" r="17" fill="#0c2748" />
+          <circle cx="58" cy="104" r="6" fill="#e8eef5" />
+          <circle class="wheel" cx="150" cy="104" r="17" fill="#0c2748" />
+          <circle cx="150" cy="104" r="6" fill="#e8eef5" />
+          <circle class="wheel" cx="212" cy="104" r="17" fill="#0c2748" />
+          <circle cx="212" cy="104" r="6" fill="#e8eef5" />
+        </symbol>
+
+        <symbol id="s-excavator" viewBox="0 0 260 180">
+          <ellipse cx="130" cy="164" rx="120" ry="10" fill="rgba(0,0,0,.15)" />
+          <rect x="16" y="132" width="210" height="26" rx="12" fill="#20232b" />
+          <circle cx="46" cy="158" r="15" fill="#111319" />
+          <circle cx="90" cy="158" r="15" fill="#111319" />
+          <circle cx="134" cy="158" r="15" fill="#111319" />
+          <circle cx="178" cy="158" r="15" fill="#111319" />
+          <rect x="30" y="88" width="150" height="48" rx="10" fill="#ffcf3f" />
+          <path d="M60 88 Q60 58 100 58 L130 58 L130 88 Z" fill="#ffe28a" />
+          <rect
+            x="66"
+            y="66"
+            width="46"
+            height="26"
+            rx="6"
+            fill="#cfe8ff"
+            stroke="#0c2748"
+            stroke-width="3"
+          />
+          <g class="arm">
+            <rect
+              x="90"
+              y="60"
+              width="86"
+              height="16"
+              rx="8"
+              fill="#e0473d"
+              transform="rotate(-28 96 78)"
+            />
+            <rect
+              x="150"
+              y="30"
+              width="64"
+              height="14"
+              rx="7"
+              fill="#e0473d"
+              transform="rotate(18 158 70)"
+            />
+            <path d="M198 46 L226 44 L222 68 L196 66 Z" fill="#af2e26" />
+          </g>
+        </symbol>
+
+        <symbol id="s-plane" viewBox="0 0 220 140">
+          <ellipse cx="110" cy="110" rx="90" ry="8" fill="rgba(0,0,0,.12)" />
+          <path
+            d="M18 66 Q18 46 46 44 L150 50 Q172 52 172 66 Q172 80 150 82 L46 88 Q18 86 18 66 Z"
+            fill="#2f6fb5"
+          />
+          <circle
+            cx="60"
+            cy="66"
+            r="12"
+            fill="#cfe8ff"
+            stroke="#1d4c85"
+            stroke-width="3"
+          />
+          <path d="M96 40 L150 8 L162 12 L128 50 Z" fill="#ffcf3f" />
+          <path d="M96 92 L150 124 L162 120 L128 82 Z" fill="#ffcf3f" />
+          <path d="M162 52 L196 40 L198 50 L168 66 Z" fill="#e0473d" />
+          <g class="prop">
+            <rect x="6" y="62" width="10" height="8" fill="#0c2748" />
+            <ellipse cx="11" cy="46" rx="5" ry="18" fill="#0c2748" />
+            <ellipse cx="11" cy="86" rx="5" ry="18" fill="#0c2748" />
+          </g>
+        </symbol>
+
+        <symbol id="s-balloon" viewBox="0 0 140 220">
+          <path
+            d="M70 4 C20 4 8 60 8 92 C8 128 34 154 70 154 C106 154 132 128 132 92 C132 60 120 4 70 4 Z"
+            fill="#2f6fb5"
+          />
+          <path
+            d="M70 4 C50 4 40 46 38 92 C36 128 50 150 70 154 C90 150 104 128 102 92 C100 46 90 4 70 4 Z"
+            fill="#eef9ff"
+          />
+          <path
+            d="M32 150 L70 160 L108 150 L100 176 L40 176 Z"
+            fill="#af2e26"
+            opacity=".0"
+          />
+          <line
+            x1="46"
+            y1="150"
+            x2="58"
+            y2="182"
+            stroke="#8a6a3e"
+            stroke-width="2"
+          />
+          <line
+            x1="94"
+            y1="150"
+            x2="82"
+            y2="182"
+            stroke="#8a6a3e"
+            stroke-width="2"
+          />
+          <line
+            x1="70"
+            y1="154"
+            x2="70"
+            y2="184"
+            stroke="#8a6a3e"
+            stroke-width="2"
+          />
+          <rect x="52" y="182" width="36" height="26" rx="4" fill="#a1743f" />
+        </symbol>
+
+        <symbol id="s-cloud" viewBox="0 0 160 80">
+          <ellipse cx="40" cy="50" rx="34" ry="24" fill="#ffffff" />
+          <ellipse cx="82" cy="36" rx="42" ry="30" fill="#ffffff" />
+          <ellipse cx="124" cy="50" rx="30" ry="20" fill="#ffffff" />
+          <rect x="30" y="48" width="100" height="22" rx="11" fill="#ffffff" />
+        </symbol>
+
+        <symbol id="s-tree" viewBox="0 0 100 140">
+          <rect x="42" y="86" width="16" height="50" rx="4" fill="#8a5a34" />
+          <circle cx="50" cy="54" r="34" fill="#5da83c" />
+          <circle cx="26" cy="70" r="24" fill="#4f9333" />
+          <circle cx="74" cy="70" r="24" fill="#4f9333" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- ============ TEDDY DOOR INTRO ============ -->
+    <div class="teddy-door" id="teddyDoor">
+      <div class="door-panel door-left">
+        <div class="bear-big">
+          <svg viewBox="0 0 320 360" preserveAspectRatio="xMidYMid slice">
+            <use href="#s-bear" />
+          </svg>
+        </div>
+      </div>
+      <div class="door-panel door-right">
+        <div class="bear-big">
+          <svg viewBox="0 0 320 360" preserveAspectRatio="xMidYMid slice">
+            <use href="#s-bear" />
+          </svg>
+        </div>
+      </div>
+      <div class="door-seam"></div>
+      <button class="door-hint" id="doorHint">
+        🐾 Tap the teddy to begin!
+      </button>
+    </div>
+
+    <!-- ============ NAV ============ -->
+    <nav id="nav">
+      <button data-target="home" onclick="goTo('home')" class="active">
+        Home
+      </button>
+      <button data-target="countdown" onclick="goTo('countdown')">
+        Countdown
+      </button>
+      <button data-target="details" onclick="goTo('details')">
+        Date &amp; Venue
+      </button>
+      <button data-target="celebration" onclick="goTo('celebration')">
+        Celebration
+      </button>
+    </nav>
+
+    <!-- ============ HERO ============ -->
+    <header class="hero" id="home">
+      <div class="sun"></div>
+      <div class="cloud c1">
+        <svg viewBox="0 0 160 80"><use href="#s-cloud" /></svg>
+      </div>
+      <div class="cloud c2">
+        <svg viewBox="0 0 160 80"><use href="#s-cloud" /></svg>
+      </div>
+      <div class="cloud c3">
+        <svg viewBox="0 0 160 80"><use href="#s-cloud" /></svg>
+      </div>
+
+      <div class="bunting">
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+        <div class="flag"></div>
+      </div>
+
+      <div class="balloon-float left">
+        <svg viewBox="0 0 140 220"><use href="#s-balloon" /></svg>
+      </div>
+      <div class="balloon-float right">
+        <svg viewBox="0 0 140 220"><use href="#s-balloon" /></svg>
+      </div>
+
+      <div class="plane-fly">
+        <svg viewBox="0 0 260 150">
+          <use href="#s-plane" x="0" y="0" width="220" height="140" />
+          <text x="188" y="76" class="plane-banner">You're Invited!</text>
+        </svg>
+      </div>
+
+      <div class="star" style="top: 16%; left: 16%; font-size: 22px">⭐</div>
+      <div
+        class="star"
+        style="top: 34%; right: 18%; font-size: 16px; animation-delay: -1s"
+      >
+        ⭐
+      </div>
+      <div
+        class="star"
+        style="bottom: 22%; left: 22%; font-size: 18px; animation-delay: -1.6s"
+      >
+        ⭐
+      </div>
+
+      <div
+        class="confetti-piece"
+        style="
+          left: 12%;
+          background: var(--yellow);
+          animation-duration: 4.6s;
+          animation-delay: 0.2s;
+        "
+      ></div>
+      <div
+        class="confetti-piece"
+        style="
+          left: 24%;
+          background: var(--red);
+          animation-duration: 5.4s;
+          animation-delay: 1.4s;
+          border-radius: 50%;
+        "
+      ></div>
+      <div
+        class="confetti-piece"
+        style="
+          left: 38%;
+          background: var(--green);
+          animation-duration: 5s;
+          animation-delay: 0.8s;
+        "
+      ></div>
+      <div
+        class="confetti-piece"
+        style="
+          left: 62%;
+          background: var(--blue);
+          animation-duration: 4.8s;
+          animation-delay: 1.9s;
+          border-radius: 50%;
+        "
+      ></div>
+      <div
+        class="confetti-piece"
+        style="
+          left: 76%;
+          background: var(--yellow);
+          animation-duration: 5.6s;
+          animation-delay: 0.5s;
+        "
+      ></div>
+      <div
+        class="confetti-piece"
+        style="
+          left: 88%;
+          background: var(--red);
+          animation-duration: 5.2s;
+          animation-delay: 1.1s;
+          border-radius: 50%;
+        "
+      ></div>
+
+      <div class="hero-invite">You're Invited to</div>
+      <h1>Manith<br />Kashyap</h1>
+      <div class="age-badge">Turning <span class="age-num">2</span>!</div>
+      <div class="ribbon">Birthday Celebrations!</div>
+
+      <div class="navhint">
+        <button onclick="goTo('countdown')">See countdown</button>
+        <button onclick="goTo('details')">Date &amp; venue</button>
+        <button onclick="goTo('celebration')">Meet the crew</button>
+      </div>
+    </header>
+
+    <div class="divider">
+      <span></span>
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+        <circle cx="12" cy="12" r="3" fill="#E0473D" />
+        <circle cx="5" cy="7" r="2" fill="#FFCF3F" />
+        <circle cx="19" cy="7" r="2" fill="#5DA83C" />
+        <circle cx="5" cy="17" r="2" fill="#5DA83C" />
+        <circle cx="19" cy="17" r="2" fill="#FFCF3F" />
+      </svg>
+      <span></span>
+    </div>
+
+    <!-- ============ COUNTDOWN ============ -->
+    <section id="countdown">
+      <div class="label">Save the date</div>
+      <h2 class="heading">Sleeps left until the party! 🎉</h2>
+      <div class="countdown">
+        <div class="cbox">
+          <span class="icon">🎂</span><span class="num" id="cd-days">00</span
+          ><span class="unit">Days</span>
+        </div>
+        <div class="cbox">
+          <span class="icon">🎈</span><span class="num" id="cd-hours">00</span
+          ><span class="unit">Hours</span>
+        </div>
+        <div class="cbox">
+          <span class="icon">🎁</span><span class="num" id="cd-mins">00</span
+          ><span class="unit">Minutes</span>
+        </div>
+        <div class="cbox">
+          <span class="icon">⭐</span><span class="num" id="cd-secs">00</span
+          ><span class="unit">Seconds</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider">
+      <span></span>
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+        <circle cx="12" cy="12" r="3" fill="#E0473D" />
+        <circle cx="5" cy="7" r="2" fill="#FFCF3F" />
+        <circle cx="19" cy="7" r="2" fill="#5DA83C" />
+        <circle cx="5" cy="17" r="2" fill="#5DA83C" />
+        <circle cx="19" cy="17" r="2" fill="#FFCF3F" />
+      </svg>
+      <span></span>
+    </div>
+
+    <!-- ============ DETAILS SIGNPOST ============ -->
+    <section id="details">
+      <div class="label">Follow the signs</div>
+      <h2 class="heading">Every detail for the big day</h2>
+      <div class="signpost-wrap">
+        <div class="signpost">
+          <div class="post-pole"></div>
+          <div class="sign date">
+            <div class="sicon">📅</div>
+            <div class="stext">
+              <h3>Date</h3>
+              <p>1st August 2026</p>
+            </div>
+          </div>
+          <div
+            class="sign venue"
+            onclick="
+              window.open(
+                'https://www.google.com/maps/search/?api=1&query=The+Serenity+Groove+Winflower+Resort+Gulf+Club+Mysore',
+                '_blank',
+              )
+            "
+          >
+            <div class="sicon">📍</div>
+            <div class="stext">
+              <h3>Venue</h3>
+              <p>
+                The Serenity Groove,<br />Next to Winflower Resort &amp; Gulf
+                Club, Mysore
+              </p>
+              <span class="maps-link">Open in Maps ↗</span>
+            </div>
+          </div>
+          <div class="sign time">
+            <div class="sicon">🕕</div>
+            <div class="stext">
+              <h3>Time</h3>
+              <p>6 PM onwards</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider">
+      <span></span>
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+        <circle cx="12" cy="12" r="3" fill="#E0473D" />
+        <circle cx="5" cy="7" r="2" fill="#FFCF3F" />
+        <circle cx="19" cy="7" r="2" fill="#5DA83C" />
+        <circle cx="5" cy="17" r="2" fill="#5DA83C" />
+        <circle cx="19" cy="17" r="2" fill="#FFCF3F" />
+      </svg>
+      <span></span>
+    </div>
+
+    <!-- ============ CELEBRATION PARADE ============ -->
+    <section class="parade-section" id="celebration">
+      <div class="label">The whole crew is ready</div>
+      <h2 class="heading">Join the celebration parade</h2>
+      <div class="parade-stage" id="paradeStage">
+        <div
+          class="cloud"
+          style="top: 8%; left: 6%; width: 110px; height: 56px"
+        >
+          <svg viewBox="0 0 160 80"><use href="#s-cloud" /></svg>
+        </div>
+        <div
+          class="cloud"
+          style="top: 14%; right: 10%; width: 90px; height: 46px"
+        >
+          <svg viewBox="0 0 160 80"><use href="#s-cloud" /></svg>
+        </div>
+
+        <div class="plane-parade">
+          <svg viewBox="0 0 260 150">
+            <use href="#s-plane" x="0" y="0" width="220" height="140" />
+            <text x="188" y="76" class="plane-banner">Aug 1st!</text>
+          </svg>
+        </div>
+
+        <div class="trees">
+          <div class="tree">
+            <svg viewBox="0 0 100 140"><use href="#s-tree" /></svg>
+          </div>
+          <div class="tree">
+            <svg viewBox="0 0 100 140"><use href="#s-tree" /></svg>
+          </div>
+          <div class="tree">
+            <svg viewBox="0 0 100 140"><use href="#s-tree" /></svg>
+          </div>
+          <div class="tree">
+            <svg viewBox="0 0 100 140"><use href="#s-tree" /></svg>
+          </div>
+          <div class="tree">
+            <svg viewBox="0 0 100 140"><use href="#s-tree" /></svg>
+          </div>
+        </div>
+
+        <div class="actor car">
+          <svg viewBox="0 0 200 110"><use href="#s-car" /></svg>
+        </div>
+        <div class="actor truck">
+          <svg viewBox="0 0 260 130"><use href="#s-truck" /></svg>
+        </div>
+        <div class="actor excavator">
+          <svg viewBox="0 0 260 180"><use href="#s-excavator" /></svg>
+        </div>
+
+        <div class="road"></div>
+      </div>
+
+      <div class="from-block">
+        <div class="from-inner">
+          <div class="from-bear">
+            <svg viewBox="0 0 320 360"><use href="#s-bear" /></svg>
+          </div>
+          <div class="from-text">
+            <div class="from-label">From</div>
+            <div class="from-names">Nakul Madhuri and Family</div>
+            <div class="heart-div"><span></span>♥<span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="display">Manith Kashyap turns 2!</div>
+      1st August 2026 · 6 PM onwards · The Serenity Groove, Mysore
+    </footer>
+
+    <script>
+      /* ---------- Teddy door intro ---------- */
+      var doorEl = document.getElementById("teddyDoor");
+      var doorHint = document.getElementById("doorHint");
+      var doorOpened = false;
+      function openDoor() {
+        if (doorOpened) return;
+        doorOpened = true;
+        doorEl.classList.add("opening");
+        setTimeout(function () {
+          doorEl.classList.add("hidden");
+        }, 1250);
+      }
+      doorHint.addEventListener("click", openDoor);
+      doorEl.addEventListener("click", openDoor);
+      setTimeout(openDoor, 2600);
+
+      /* ---------- Nav scroll + active state ---------- */
+      function goTo(id) {
+        document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+      }
+      var sections = ["home", "countdown", "details", "celebration"];
+      window.addEventListener("scroll", function () {
+        var current = sections[0];
+        for (var i = 0; i < sections.length; i++) {
+          var el = document.getElementById(sections[i]);
+          if (el && el.getBoundingClientRect().top <= 120)
+            current = sections[i];
+        }
+        document.querySelectorAll("nav button").forEach(function (b) {
+          b.classList.toggle("active", b.dataset.target === current);
+        });
+      });
+
+      /* ---------- Countdown ---------- */
+      var partyDate = new Date("2026-08-01T18:00:00");
+      var secsEl = document.getElementById("cd-secs");
+      var secsBox = secsEl.closest(".cbox");
+      function updateCountdown() {
+        var now = new Date();
+        var diff = partyDate - now;
+        if (diff < 0) diff = 0;
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        var mins = Math.floor((diff / (1000 * 60)) % 60);
+        var secs = Math.floor((diff / 1000) % 60);
+        document.getElementById("cd-days").textContent = String(days).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("cd-hours").textContent = String(
+          hours,
+        ).padStart(2, "0");
+        document.getElementById("cd-mins").textContent = String(mins).padStart(
+          2,
+          "0",
+        );
+        secsEl.textContent = String(secs).padStart(2, "0");
+        if (secsBox) {
+          secsBox.style.transition =
+            "transform .25s cubic-bezier(.34,1.56,.64,1)";
+          secsBox.style.transform = "scale(1.1) translateY(0)";
+          setTimeout(function () {
+            secsBox.style.transform = "";
+          }, 180);
+        }
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      var cboxObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add("in-view");
+          });
+        },
+        { threshold: 0.4 },
+      );
+      document.querySelectorAll(".cbox").forEach(function (el) {
+        cboxObserver.observe(el);
+      });
+
+      /* ---------- Scroll reveal: signpost + parade ---------- */
+      var signObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add("in-view");
+          });
+        },
+        { threshold: 0.35 },
+      );
+      document.querySelectorAll(".sign").forEach(function (el) {
+        signObserver.observe(el);
+      });
+
+      var stageObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add("in-view");
+          });
+        },
+        { threshold: 0.3 },
+      );
+      stageObserver.observe(document.getElementById("paradeStage"));
+    </script>
+  </body>
+</html>
